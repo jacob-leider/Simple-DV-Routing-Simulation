@@ -1,0 +1,9 @@
+// sample input (format: <node_1, distance_1>: ... :<node_n, distance_n>:EOV:)
+// EOV = "end of vector"
+// Line-comments begin with "//", and will be ignored
+u:<u,0>:<v,7>:<w,3>:<x,5>:<y,-1>:<z,-1>
+v:<u,7>:<v,0>:<w,3>:<x,-1>:<y,4>:<z,-1>
+w:<u,3>:<v,3>:<w,0>:<x,4>:<y,8>:<z,-1>
+x:<u,5>:<v,-1>:<w,4>:<x,0>:<y,7>:<z,9>
+y:<u,-1>:<v,4>:<w,8>:<x,7>:<y,0>:<z,2>
+z:<u,-1>:<v,-1>:<w,-1>:<x,9>:<y,2>:<z,0>
