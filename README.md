@@ -38,7 +38,7 @@ be ignored during network topology construction):
 
 [router id]:<[router 1 id], [distance estimate]>: ... <[last router id], [distance estimate]>:
 
-If nodes are not adjacent in the network, their starting distance should be NEGATIVE. Conversely, if a distance is specified as negative, it will be assumed that the nodes
+All entries are separated by a colon ":". If nodes are not adjacent in the network, their starting distance should be NEGATIVE. Conversely, if a distance is specified as negative, it will be assumed that the nodes
 are node adjacent. The distance from node to itself is specified as ZERO. Line comments are acceptable and will be ignored during network topology construction. A line
 comment begins with "//".
 
