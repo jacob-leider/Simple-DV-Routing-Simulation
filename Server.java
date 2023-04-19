@@ -1,16 +1,18 @@
-import org.w3c.dom.Node;
-
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+
 public class Server implements Runnable {
     private final DatagramSocket socket;                              // the socket for this server
     private final HashMap<String, Utils.Node> distanceTable;          // stores node info for each router ID
 
-
-    // constructor: creates a server bound to the specified address, representing the
-    // network topology specified in the filename "netTopologyFP"
+    /**
+     * Creates a server bound to the specified address, representing the network topology specified in the filename
+     * "netTopologyFP"
+     * @param serverAddress socket address for the server to bind to
+     * @param netTopologyFP file path to "topology.txt"
+     */
     public Server(InetSocketAddress serverAddress, String netTopologyFP) {
         try {
             this.socket = new DatagramSocket(serverAddress);
@@ -23,7 +25,14 @@ public class Server implements Runnable {
         }
     }
 
-
+    /**
+     * Runs this server:
+     * 1. Waits for all nodes (clients) to join the network (send JOIN) requests to this server
+     * 2. Responds to JOIN requests with an initial DV
+     * 3. Facilitates the execution of the Bellman-Ford DV algorithm by forwarding UPDATE requesst from clients to
+     *    adjacent nodes in the network
+     * 5. Terminates once all clients have terminated their respective proesses
+     */
     @Override
     public void run() {
         byte[] buff = new byte[Utils.MAXLINE], responseBuff;
@@ -85,26 +94,26 @@ public class Server implements Runnable {
         } while (activeNodes > 0);
     }
 
-
     // return router ids of all routers that have joined the network
     String[] getNodes() {
         return distanceTable.keySet().toArray(new String[0]);
     }
-
 
     // return the number of nodes in the network
     int getNumNodes() {
         return distanceTable.keySet().size();
     }
 
-
-    // initializes the network topology from the file given by "filepath"
+    /**
+     * initializes the network topology from the file given by "filepath"
+     * @param filepath path to "topology.txt"
+     * @throws FileNotFoundException
+     */
     public void initializeDistanceTable(String filepath) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(filepath));
         String line, id, srcID;
         String[] pair, entries, entry;
         int dist;
-
         while (scanner.hasNextLine()) {
             line = scanner.nextLine().trim();
             if (!line.startsWith("//")) {   // if line is not a comment
